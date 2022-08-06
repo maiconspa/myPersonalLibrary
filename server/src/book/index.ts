@@ -29,7 +29,6 @@ export const Book = model<IBook>('Book', bookSchema);
 bookRouter.post(
     '/book/create',
     async (request: Request, response: Response) => {
-
         const {
             title,
             author,
@@ -50,19 +49,84 @@ bookRouter.post(
             ownerId: new ObjectId(ownerId)
         });
 
-        await book.save();
-        response.status(200).send();
-    })
+        try {
+            await book.save();
+            response.status(204).send();
+        } catch (error: any) {
+            console.error('error', error);
+            response.status(422).send();
+        }
+    }
+)
+
+bookRouter.put(
+    '/book/update',
+    async (request: Request, response: Response) => {
+        const {
+            id,
+            title,
+            author,
+            addDate,
+            conclusionDate,
+            rating,
+            status,
+            ownerId
+        } = request.body;
+
+        const newBookInfos = {
+            id: id,
+            title: title,
+            author: author,
+            addDate: new Date(addDate),
+            conclusionDate: conclusionDate ? new Date(conclusionDate) : null,
+            rating: rating ?? null,
+            status: status,
+            ownerId: new ObjectId(ownerId)
+        };
+
+        try {
+            await Book.findByIdAndUpdate(id, newBookInfos);
+            response.status(204).send();
+        } catch (error: any) {
+            console.error('error', error);
+            response.status(422).send();
+        }
+    }
+)
 
 bookRouter.get(
     '/book/read/byOwner/:ownerId',
     async (request: Request, response: Response) => {
-
         const { ownerId } = request.params;
 
-        const books: Array<IBook> = await Book.find({ ownerId });
+        try {
+            const books: Array<IBook> = await Book.find({ ownerId });
+            response.send(books);
+        } catch (error: any) {
+            console.error('error', error);
+            response.status(422).send();
+        }
+    }
+)
 
-        response.send(books);
-    })
+bookRouter.delete(
+    '/book/delete',
+    async (request: Request, response: Response) => {
+        const { id } = request.body;
+
+        try {
+            const book = await Book.findById(new ObjectId(id))
+
+            if (book) {
+                await book.delete();
+                response.status(204).send();
+            } else {
+                response.status(404).send()
+            }
+        } catch (error: any) {
+
+        }
+    }
+)
 
 export default bookRouter;

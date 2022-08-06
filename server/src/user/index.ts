@@ -30,7 +30,7 @@ userRouter.post(
                 response.status(409).send("Email already registered");
             } else {
                 user.save();
-                response.send();
+                response.status(204).send();
             }
         } catch (error: any) {
             console.error("error", error);
