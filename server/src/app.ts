@@ -3,6 +3,7 @@ import cors from 'cors'
 import mongoose, { connect } from 'mongoose';
 import dotenv from "dotenv";
 import bookRouter from './book';
+import userRouter from './user';
 dotenv.config();
 
 class App {
@@ -47,6 +48,7 @@ class App {
 
     private routes(): void {
         this.express.use(bookRouter);
+        this.express.use(userRouter);
     }
 }
 

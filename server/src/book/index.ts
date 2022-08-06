@@ -1,10 +1,10 @@
-import { Router, Request, Response } from "express";
-import { ObjectId } from "mongodb";
-import { model, Schema } from "mongoose";
+import { Router, Request, Response } from 'express';
+import { ObjectId } from 'mongodb';
+import { model, Schema } from 'mongoose';
 
 const bookRouter = Router();
 
-interface IBook {
+export interface IBook {
     title: string,
     author: string,
     addDate: Date,
@@ -14,36 +14,55 @@ interface IBook {
     ownerId: ObjectId
 }
 
-const bookSchema = new Schema<IBook>({
+export const bookSchema = new Schema<IBook>({
     title: { type: String, required: true },
     author: { type: String, required: true },
     addDate: { type: Date, required: true },
-    conclusionDate: { Date: String },
+    conclusionDate: { type: Date },
     rating: { type: Number },
     status: { type: Number, required: true },
     ownerId: { type: ObjectId, required: true }
 })
 
-const Book = model<IBook>('Book', bookSchema);
+export const Book = model<IBook>('Book', bookSchema);
 
-bookRouter.post("/book/create", async (req: Request, res: Response) => {
-    
-    console.log('req: ', req.body)
-    
-    const book = new Book({
-        title: req.body.title,
-        author: req.body.author,
-        addDate: new Date(req.body.addDate),
-        conclusionDate: new Date(req.body.conclusionDate),
-        rating: req.body.rating,
-        status: req.body.status,
-        ownerId: new ObjectId(req.body.ownerId)
+bookRouter.post(
+    '/book/create',
+    async (request: Request, response: Response) => {
+
+        const {
+            title,
+            author,
+            addDate,
+            conclusionDate,
+            rating,
+            status,
+            ownerId
+        } = request.body;
+
+        const book = new Book({
+            title: title,
+            author: author,
+            addDate: new Date(addDate),
+            conclusionDate: new Date(conclusionDate),
+            rating: rating,
+            status: status,
+            ownerId: new ObjectId(ownerId)
+        });
+
+        await book.save();
+        response.status(200).send();
     })
 
-    console.log('book: ', book)
+bookRouter.get(
+    '/book/read/byOwner/:ownerId',
+    async (request: Request, response: Response) => {
 
-    await book.save();
-    res.status(200).send();
-})
+        const { ownerId } = request.params;
+
+        const books: Array<IBook> = await Book.find({ ownerId });
+
+        response.send(books);
+    })
 
 export default bookRouter;
