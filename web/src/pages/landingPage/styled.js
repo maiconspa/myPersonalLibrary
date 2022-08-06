@@ -36,3 +36,7 @@ export const LPActionButtons = styled.div`
     display: flex;
     justify-items: end;
 `
+
+export const LPDialog = styled.div`
+
+`
