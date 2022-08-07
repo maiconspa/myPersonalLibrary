@@ -1,13 +1,37 @@
-import React, { useState } from 'react'
-import Button from '../../components/button'
+import React, { useState, useRef } from 'react'
+import { useNavigate } from 'react-router-dom';
 
-import { Dialog } from '../../components/dialog'
-import { LPContainer, LPTextContainer, LPActionButtons, LPDialog } from './styled'
+import Button from '../../components/button'
+import Dialog from '../../components/dialog'
+import { create, login } from '../../services/userApi'
+import { LPContainer, LPTextContainer, LPActionButtons, LPDialog, TextInputContainer } from './styled'
 
 const LandingPage = () => {
 
     const [show, setShow] = useState(false)
     const [activeDialog, setActiveDialog] = useState(1)
+    const emailInputRef = useRef()
+    const passwordInputRef = useRef()
+    const ConfirmPasswordInputRef = useRef()
+    const navigate = useNavigate()
+
+    const submitForm = () => {
+
+        let data = {
+            email: emailInputRef.current.value,
+            password: passwordInputRef.current.value
+        }
+
+        if (activeDialog === 'Sign in') {
+            login(data).then(() => navigate('/home'));
+        } else {
+            data.password === ConfirmPasswordInputRef.current.value
+                ? create(data).then(() => navigate('/home'))
+                : console.warn('confirmation password failed')
+        }
+
+        console.log(data)
+    }
 
     return <>
         <LPContainer>
@@ -34,11 +58,27 @@ const LandingPage = () => {
             <LPDialog>
                 <h1>{activeDialog}</h1>
 
-                {/* <TextInput label="E-mail"/>
-                <TextInput label="Password"/>
-                <TextInput label="Confirm password"/> */}
+                <TextInputContainer>
+                    <label>E-mail</label>
+                    <input ref={emailInputRef}/>
+                </TextInputContainer>
+                <TextInputContainer>
+                    <label>password</label>
+                    <input ref={passwordInputRef}/>
+                </TextInputContainer>
 
-                <Button text={activeDialog} />
+                {
+                    activeDialog === "Sign up"
+                        && <TextInputContainer>
+                        <label>Confirm password</label>
+                        <input ref={ConfirmPasswordInputRef}/>
+                    </TextInputContainer>
+                }
+                
+
+                <Button expanded text={activeDialog} onClick={() => submitForm()}/>
+
+                <hr/>
 
                 <div>
                     <p>
@@ -48,7 +88,9 @@ const LandingPage = () => {
                                 : "Already have an account?"
                         }
                     </p>
-                    <button> {activeDialog} </button>
+                    <button onClick={() => activeDialog === 'Sign in' ? setActiveDialog('Sign up') : setActiveDialog('Sign in')}> 
+                        {activeDialog === 'Sign in' ? 'Sign up' : 'Sign in'}
+                    </button>
                 </div>
             </LPDialog>
         </Dialog>

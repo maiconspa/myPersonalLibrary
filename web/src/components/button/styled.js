@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.button`
+    width: ${props => props.expanded ? "100%" : "unset"};
     padding: ${props => props.padding ?? "5px 30px"};
     background: ${props => props.secondary ? "transparent" : "#D9AA63"};
     cursor: pointer;

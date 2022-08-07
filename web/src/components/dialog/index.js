@@ -1,7 +1,7 @@
 
 import { Container, DialogBox, Close } from './styled'
 
-export const Dialog = props => {
+const Dialog = props => {
     const { isOpen, children, handleClose } = props
     
     return isOpen && <Container isOpen={isOpen}>
@@ -11,3 +11,5 @@ export const Dialog = props => {
         </DialogBox>
     </Container>
 }
+
+export default Dialog
