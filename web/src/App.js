@@ -1,15 +1,13 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, useRoutes } from 'react-router-dom'
 
 import Home from './pages/home'
 import LandingPage from './pages/landingPage'
 
-const App = () => {
-  return <Router>
-      <Routes>
-        <Route exact path="/" element={<LandingPage/>}/>
-        <Route exact path="/home" element={<Home/>}/>
-      </Routes>
-  </Router>
-}
+const App = () =>
+  useRoutes([
+    { path: "/", element: <LandingPage /> },
+    { path: "/home", element: <Home /> },
+    { path: "/home/:filter", element: <Home /> }
+  ]);
 
 export default App;

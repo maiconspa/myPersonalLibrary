@@ -23,10 +23,19 @@ const LandingPage = () => {
         }
 
         if (activeDialog === 'Sign in') {
-            login(data).then(() => navigate('/home'));
+            login(data).then(response => {
+                console.log('response', response)
+                localStorage.setItem('userId', response.data.id)
+                navigate('/home')
+            })
         } else {
             data.password === ConfirmPasswordInputRef.current.value
-                ? create(data).then(() => navigate('/home'))
+                ? create(data)
+                    .then(response => {
+                        console.log('response', response)
+                        localStorage.setItem('userId', response.data.id)
+                        navigate('/home')
+                    })
                 : console.warn('confirmation password failed')
         }
 
@@ -60,11 +69,11 @@ const LandingPage = () => {
 
                 <TextInputContainer>
                     <label>E-mail</label>
-                    <input ref={emailInputRef}/>
+                    <input ref={emailInputRef} type="email"/>
                 </TextInputContainer>
                 <TextInputContainer>
                     <label>password</label>
-                    <input ref={passwordInputRef}/>
+                    <input ref={passwordInputRef} type="password"/>
                 </TextInputContainer>
 
                 {
@@ -74,9 +83,11 @@ const LandingPage = () => {
                         <input ref={ConfirmPasswordInputRef}/>
                     </TextInputContainer>
                 }
-                
 
-                <Button expanded text={activeDialog} onClick={() => submitForm()}/>
+                <Button
+                    expanded
+                    text={activeDialog}
+                    onClick={() => submitForm()}/>
 
                 <hr/>
 

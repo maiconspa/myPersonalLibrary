@@ -1,7 +1,7 @@
 
 
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import React from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 
 import { Container } from "./styled"
 
@@ -12,7 +12,6 @@ import { ReactComponent as RatedIcon } from '../../assets/icons/rated.svg'
 import { ReactComponent as DisconnectIcon } from '../../assets/icons/disconnect.svg'
 
 const Navbar = () => {
-    const [filter, setFilter] = useState('all')
     const navigate = useNavigate();
 
     const disconnect = () => {
@@ -27,24 +26,29 @@ const Navbar = () => {
             <p>Filters</p>
             <ul>
                 <li> 
-                    <button onClick={() => setFilter('all')}>
+                    <Link to="/home/all">
                         <AllIcon/> All
-                    </button>
+                    </Link>
                 </li>
                 <li> 
-                    <button onClick={() => setFilter('read')}>
+                    <Link to="/home/read">
                         <ReadIcon/> Read
-                    </button>
+                    </Link>
                 </li>
                 <li> 
-                    <button onClick={() => setFilter('planToRead')}>
+                    <Link to="/home/reading">
+                        <ReadIcon/> Reading
+                    </Link>
+                </li>
+                <li> 
+                    <Link to="/home/planToRead">
                         <PlanToReadIcon/> Plan to read
-                    </button>
+                    </Link>
                 </li>
                 <li> 
-                    <button onClick={() => setFilter('rated')}>
+                    <Link to="/home/rated">
                         <RatedIcon/> Rated
-                    </button>
+                    </Link>
                 </li>
             </ul>
         </div>

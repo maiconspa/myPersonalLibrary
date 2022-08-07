@@ -9,7 +9,6 @@ const Router = () => <BrowserRouter>
 {/* navbar */}
     <Routes>
         <Route path='/' component={() => <LandingPage/>}/>
-        <Route path='/home' component={() => <Home/>}/>
     </Routes>
 </BrowserRouter>
 
