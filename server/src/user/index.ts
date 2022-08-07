@@ -30,7 +30,7 @@ userRouter.post(
                 response.status(409).send("Email already registered");
             } else {
                 user.save();
-                response.status(204).send();
+                response.send({id: user.id});
             }
         } catch (error: any) {
             console.error("error", error);
@@ -45,7 +45,7 @@ userRouter.post("/user/login", async (request: Request, response: Response) => {
 
         const user = await User.findOne({ email, password });
 
-        user ? response.send() : response.status(404).send();
+        user ? response.send({id: user.id}) : response.status(404).send();
     } catch (error: any) {
         console.error("error", error);
         response.status(422).send();
