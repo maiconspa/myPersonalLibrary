@@ -1,9 +1,7 @@
-
-
 import React from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
-import { Container } from "./styled"
+import { Container, ListItem } from "./styled"
 
 import { ReactComponent as AllIcon } from '../../assets/icons/all_itens.svg'
 import { ReactComponent as ReadIcon } from '../../assets/icons/done.svg'
@@ -13,6 +11,7 @@ import { ReactComponent as DisconnectIcon } from '../../assets/icons/disconnect.
 
 const Navbar = () => {
     const navigate = useNavigate();
+    const { filter } = useParams()
 
     const disconnect = () => {
         localStorage.clear()
@@ -20,36 +19,36 @@ const Navbar = () => {
     }
     
     return <Container>
-        <h3>MY<br/>PERSONAL<br/>LIBRARY</h3>
+        <h2>MY<br/>PERSONAL<br/>LIBRARY</h2>
 
         <div>
             <p>Filters</p>
             <ul>
-                <li> 
+                <ListItem active={filter === "all"}> 
                     <Link to="/home/all">
                         <AllIcon/> All
                     </Link>
-                </li>
-                <li> 
+                </ListItem>
+                <ListItem active={filter === "read"}> 
                     <Link to="/home/read">
                         <ReadIcon/> Read
                     </Link>
-                </li>
-                <li> 
+                </ListItem>
+                <ListItem active={filter === "reading"}> 
                     <Link to="/home/reading">
                         <ReadIcon/> Reading
                     </Link>
-                </li>
-                <li> 
+                </ListItem>
+                <ListItem active={filter === "planToRead"}> 
                     <Link to="/home/planToRead">
                         <PlanToReadIcon/> Plan to read
                     </Link>
-                </li>
-                <li> 
+                </ListItem>
+                <ListItem active={filter === "rated"}> 
                     <Link to="/home/rated">
                         <RatedIcon/> Rated
                     </Link>
-                </li>
+                </ListItem>
             </ul>
         </div>
 

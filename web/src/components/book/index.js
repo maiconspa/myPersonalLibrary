@@ -1,21 +1,18 @@
 import { useState } from 'react'
 
-import Dialog from '../dialog'
+import { bookDialog } from './dialog'
 import { BookContainer } from './styled'
 
 const Book = ({data}) => {
     const [show, setShow] = useState(false)
     
-    console.log('bookData', data)
-
     return <>
-        <BookContainer>
-            sdhuoaijbksdhoiapdjsja
+        <BookContainer onClick={() => setShow(true)}>
+            <p>{data.title}</p>
         </BookContainer>
-        <Dialog isOpen={show} handleClose={bool => setShow(bool)}>
-        </Dialog>
+
+        {bookDialog({show, setShow, data})}
     </>
-    
 }
 
 export default Book

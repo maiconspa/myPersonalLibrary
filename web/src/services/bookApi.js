@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export async function getAllBooks(ownerId) {
-    return await axios.get('http://localhost:1000/book/read/byOwner/' + ownerId)
+    return axios.get('http://localhost:1000/book/read/byOwner/' + ownerId)
 }
 
 export function createBook(data) {

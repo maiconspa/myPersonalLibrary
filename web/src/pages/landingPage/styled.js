@@ -43,22 +43,15 @@ export const LPDialog = styled.div`
 
 `
 
-export const TextInputContainer = styled.div`
-    display: block;
+export const LPDialogFooter = styled.div`
+    display: flex;
+    align-items: center;
 
-    > label {
-        display: block;
+    >button {
+        background: none;
+        cursor: pointer;
+        border: none;
+        font-weight: bold;
+        color: #D9AA63;
     }
-
-    > input {
-        display: block;
-        height: 30px;
-        background: transparent;
-        line-height: 30px;
-        border-color: #000;
-        border-width: 1px;
-        border-radius: 5px;
-
-        font-size: 20px;
-    }
-` 
+`

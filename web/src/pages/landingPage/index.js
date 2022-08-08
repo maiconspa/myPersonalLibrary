@@ -1,22 +1,25 @@
-import React, { useState, useRef } from 'react'
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import Button from '../../components/button'
-import Dialog from '../../components/dialog'
 import { create, login } from '../../services/userApi'
-import { LPContainer, LPTextContainer, LPActionButtons, LPDialog, TextInputContainer } from './styled'
+import { landingPageDialog } from './dialog'
+
+import { LPContainer, LPTextContainer, LPActionButtons } from './styled'
 
 const LandingPage = () => {
-
     const [show, setShow] = useState(false)
     const [activeDialog, setActiveDialog] = useState(1)
     const emailInputRef = useRef()
     const passwordInputRef = useRef()
-    const ConfirmPasswordInputRef = useRef()
+    const confirmPasswordInputRef = useRef()
     const navigate = useNavigate()
 
-    const submitForm = () => {
+    useEffect(() => {
+        localStorage.clear();
+    }, [])
 
+    const submitForm = () => {
         let data = {
             email: emailInputRef.current.value,
             password: passwordInputRef.current.value
@@ -24,22 +27,27 @@ const LandingPage = () => {
 
         if (activeDialog === 'Sign in') {
             login(data).then(response => {
-                console.log('response', response)
                 localStorage.setItem('userId', response.data.id)
-                navigate('/home')
+                navigate('/home/all')
             })
         } else {
-            data.password === ConfirmPasswordInputRef.current.value
+            data.password === confirmPasswordInputRef.current.value
                 ? create(data)
                     .then(response => {
-                        console.log('response', response)
                         localStorage.setItem('userId', response.data.id)
-                        navigate('/home')
+                        navigate('/home/all')
                     })
                 : console.warn('confirmation password failed')
         }
+    }
 
-        console.log(data)
+    let dialogControl = {
+        show: show,
+        setShow: setShow,
+        activeDialog: activeDialog,
+        setActiveDialog: setActiveDialog,
+        refFields: {emailInputRef, passwordInputRef, confirmPasswordInputRef},
+        submitForm: submitForm
     }
 
     return <>
@@ -63,48 +71,7 @@ const LandingPage = () => {
             </LPTextContainer>
         </LPContainer>
 
-        <Dialog isOpen={show} handleClose={bool => setShow(bool)}>
-            <LPDialog>
-                <h1>{activeDialog}</h1>
-
-                <TextInputContainer>
-                    <label>E-mail</label>
-                    <input ref={emailInputRef} type="email"/>
-                </TextInputContainer>
-                <TextInputContainer>
-                    <label>password</label>
-                    <input ref={passwordInputRef} type="password"/>
-                </TextInputContainer>
-
-                {
-                    activeDialog === "Sign up"
-                        && <TextInputContainer>
-                        <label>Confirm password</label>
-                        <input ref={ConfirmPasswordInputRef}/>
-                    </TextInputContainer>
-                }
-
-                <Button
-                    expanded
-                    text={activeDialog}
-                    onClick={() => submitForm()}/>
-
-                <hr/>
-
-                <div>
-                    <p>
-                        {
-                            activeDialog === 'Sign in'
-                                ? "Don’t have an account?"
-                                : "Already have an account?"
-                        }
-                    </p>
-                    <button onClick={() => activeDialog === 'Sign in' ? setActiveDialog('Sign up') : setActiveDialog('Sign in')}> 
-                        {activeDialog === 'Sign in' ? 'Sign up' : 'Sign in'}
-                    </button>
-                </div>
-            </LPDialog>
-        </Dialog>
+        { landingPageDialog(dialogControl) }
     </>
 }
 

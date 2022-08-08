@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export async function login(data) {
-    return await axios.post('http://localhost:1000/user/login', data)
+    return axios.post('http://localhost:1000/user/login', data)
 }
 
 export function create(data) {
