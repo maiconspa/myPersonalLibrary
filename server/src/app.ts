@@ -34,15 +34,15 @@ class App {
         mongoose.connect(this.db_uri, {}),
     
         mongoose.connection.on('error', () => {
-          console.log("Erro na conexão com o banco de dados")
+          console.warn("Erro na conexão com o banco de dados")
         })
     
         mongoose.connection.on('disconnect', () => {
-          console.log("Aplicação desconectada do banco de dados")
+          console.warn("Aplicação desconectada do banco de dados")
         })
     
         mongoose.connection.on("connected", () => {
-          console.log("Aplicação conectada ao banco de dados")
+          console.warn("Aplicação conectada ao banco de dados")
         })
     }
 
