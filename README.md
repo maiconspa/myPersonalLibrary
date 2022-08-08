@@ -1,5 +1,8 @@
 # myPersonalLibrary
 
+# Design
+[Figma](https://www.figma.com/file/bWB8Vh9EIXok0RgZmA7mSN/My-personal-library)
+
 # Front
 
 In the project directory:
