@@ -1,0 +1,202 @@
+{
+	"info": {
+		"_postman_id": "8d87d822-5be3-4a9d-8de6-a55ab44683f1",
+		"name": "My Personal Library",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18389149"
+	},
+	"item": [
+		{
+			"name": "Book",
+			"item": [
+				{
+					"name": "get all by user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/book/read/byOwner/62eeb6b57927a0ea207e6ed1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"book",
+								"read",
+								"byOwner",
+								"62eeb6b57927a0ea207e6ed1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new book",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"title\",\n    \"author\": \"author\",\n    \"addDate\": \"2022-04-06T14:45:15\",\n    \"conclusionDate\": \"2022-04-06T14:50:15\",\n    \"rating\": 5,\n    \"status\": 3, // 1 = 'plan to read', 2 = 'reading', 3 = 'read'\n    \"ownerId\": \"62eeb6b57927a0ea207e6ed1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/book/create",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"book",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete book",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"bookId\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/book/delete",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"book",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update book",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"bookId\",\n    \"title\": \"title\",\n    \"author\": \"author\",\n    \"addDate\": \"2022-04-06T14:45:15\",\n    \"conclusionDate\": \"2022-04-06T14:50:15\",\n    \"rating\": 5,\n    \"status\": 1, // 1 = 'plan to read', 2 = 'reading', 3 = 'read'\n    \"ownerId\": \"ownerId\" \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/book/update",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"book",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user@demain.com\",\n    \"password\": \"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user@domain.com\",\n    \"password\": \"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/create",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user@domain.com\",\n    \"password\": \"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/delete",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
